@@ -1,0 +1,37 @@
+---
+title: "mass-census"
+author: "Areeb Atif"
+format: html
+echo: false
+message: false
+---
+
+```{r}
+#| labe: setup
+#| echo: false
+#| message: false
+
+library(tidyverse)
+library(tidycensus)
+library(primer.data)
+library(ggbeeswarm)
+
+```
+
+```{r}
+x <- read_csv("mass-tracts.csv", show_col_types = FALSE)
+```
+
+```{r}
+x |> 
+  drop_na() |> 
+  ggplot(aes(x = med_income, y = race, color = med_income)) +
+    geom_quasirandom() +
+    scale_x_continuous(labels = scales::dollar_format()) + scale_color_viridis_c(guide = "none") + 
+    labs(title = "Median Income for Massachusetts Census Tracts",
+       subtitle = "The Richest Tracts are White",
+       x = "Median Income",
+       y = NULL)
+```
+
+
